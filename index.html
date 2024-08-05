@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            height: 100%;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .policy-content {
+            max-width: 800px;
+            width: 100%;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(-50px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .policy-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-top: 0;
+            text-align: center;
+            color: #007BFF;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: #0056b3;
+            margin-bottom: 10px;
+        }
+
+        p {
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            background: #e0f7fa;
+            border-left: 5px solid #007BFF;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="policy-content" class="policy-content">
+            <h1>Privacy Policy</h1>
+            <div class="section">
+                <h2>Introduction</h2>
+                <p>Welcome to our privacy policy. We are committed to protecting your personal information and your right to privacy. This privacy policy explains how we collect, use, and share information about you when you use our services.</p>
+            </div>
+            <div class="section">
+                <h2>Information We Collect</h2>
+                <p>We collect information that you provide to us directly, such as when you create an account, make a purchase, or contact us for support. This information may include personal details such as your name, email address, and payment information.</p>
+                <div class="highlight">
+                    <p>We may also collect information about your usage of our services, such as your IP address, browser type, and pages visited.</p>
+                </div>
+            </div>
+            <div class="section">
+                <h2>How We Use Your Information</h2>
+                <p>We use the information we collect to provide and improve our services, process transactions, and communicate with you. We may also use your information for marketing purposes, but only if you have given us permission to do so.</p>
+            </div>
+            <div class="section">
+                <h2>Data Security</h2>
+                <p>We take appropriate measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. We use encryption and other security technologies to safeguard your data.</p>
+            </div>
+            <div class="section">
+                <h2>Changes to This Policy</h2>
+                <p>We may update this privacy policy from time to time. We will notify you of any significant changes by posting the updated policy on our website.</p>
+            </div>
+            <div class="section">
+                <h2>Contact Us</h2>
+                <p>If you have any questions or concerns about this privacy policy or our data practices, please contact us at <a href="mailto:support@example.com">support@example.com</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to add animation on page load
+        window.addEventListener('load', () => {
+            const policyContent = document.getElementById('policy-content');
+            policyContent.classList.add('visible');
+        });
+    </script>
+</body>
+</html>
