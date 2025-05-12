@@ -1,1 +1,48 @@
-hello i am bubu07
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hello I'm bubu07</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 5rem;
+      color: #fff;
+      text-shadow: 0 0 20px #00ffe1, 0 0 40px #00bcd4, 0 0 60px #00ffe1;
+      animation: spin 10s linear infinite, pulse 2s ease-in-out infinite;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    @keyframes spin {
+      0%   { transform: rotateY(0deg) rotateX(0deg); }
+      50%  { transform: rotateY(180deg) rotateX(360deg); }
+      100% { transform: rotateY(360deg) rotateX(720deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 10px #00ffe1; }
+      50% { text-shadow: 0 0 30px #00bcd4, 0 0 60px #00ffe1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Hello, I'm bubu07</h1>
+</body>
+</html>
