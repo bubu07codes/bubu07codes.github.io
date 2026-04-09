@@ -1,48 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hello I'm bubu07</title>
+  <meta charset="UTF-8">
+  <title>index_backup_final.html</title>
   <style>
-    * {
+    /* wassup fellow reader!! /*/
+    body {
+      background-color: #2e2e2e;
+      color: #bbbbbb;
+      font-family: "Courier New", Courier, monospace;
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      padding: 50px 0;
+      line-height: 1.5;
     }
 
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      overflow: hidden;
+    #wrapper {
+      width: 580px;
+      margin: 0 auto;
+      background-color: #1a1a1a;
+      border: 1px solid #444;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    header {
+      border-bottom: 1px solid #444;
+      padding-bottom: 10px;
+      margin-bottom: 25px;
     }
 
     h1 {
-      font-size: 5rem;
-      color: #fff;
-      text-shadow: 0 0 20px #00ffe1, 0 0 40px #00bcd4, 0 0 60px #00ffe1;
-      animation: spin 10s linear infinite, pulse 2s ease-in-out infinite;
-      transform-style: preserve-3d;
-      perspective: 1000px;
+      font-size: 18px;
+      color: #eee;
+      margin: 0;
+      text-transform: lowercase;
     }
 
-    @keyframes spin {
-      0%   { transform: rotateY(0deg) rotateX(0deg); }
-      50%  { transform: rotateY(180deg) rotateX(360deg); }
-      100% { transform: rotateY(360deg) rotateX(720deg); }
+    .timestamp {
+      font-size: 11px;
+      color: #666;
+    }
+
+    .log-entry {
+      font-size: 13px;
+      margin-bottom: 40px;
+    }
+
+    .log-entry h2 {
+      font-size: 14px;
+      color: #880000;
+      margin-bottom: 5px;
+    }
+
+    p { margin-bottom: 15px; }
+
+    .code-block {
+      background: #000;
+      padding: 10px;
+      border-left: 3px solid #333;
+      color: #00ff41;
+      font-size: 12px;
+      overflow: hidden;
+    }
+
+    .meta-data {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      font-size: 11px;
+      color: #555;
+    }
+
+    .flicker {
+      animation: pulse 4s infinite alternate;
     }
 
     @keyframes pulse {
-      0%, 100% { text-shadow: 0 0 10px #00ffe1; }
-      50% { text-shadow: 0 0 30px #00bcd4, 0 0 60px #00ffe1; }
+      0% { opacity: 1; }
+      50% { opacity: 0.8; }
+      100% { opacity: 0.9; }
+    }
+
+    .ghost-cursor {
+      position: fixed;
+      width: 12px;
+      height: 19px;
+      background: url('https://cur.cursors-4u.net/cursors/cur-2/cur117.cur'), auto;
+      pointer-events: none;
+      opacity: 0.3;
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
-  <h1>Hello, I'm bubu07</h1>
+
+<div id="wrapper" class="flicker">
+  <header>
+    <h1>bubu07.devlog.archive</h1>
+    <div class="timestamp">Monday, October 23, 2006 - 03:14 AM</div>
+  </header>
+
+  <div class="log-entry">
+    <h2>Subject: The Refactoring is Complete</h2>
+    <p>
+      I’ve spent 72 hours trying to find the memory leak. I finally realized it wasn’t in the software. It was in the observer.
+    </p>
+    <p>
+      Every time I compile, I feel a little bit thinner. Like I’m being distributed across the server clusters. If you’re reading this, the deployment was successful. I’m not in the chair anymore. I’m in the <code>&lt;body&gt;</code>.
+    </p>
+    
+    <div class="code-block" id="autotype">
+      // Finalizing sync...<br>
+      // Deleting physical_assets...<br>
+      // [WARNING] Consciousness found in Stack Trace.<br>
+      while(active) { <br>
+      &nbsp;&nbsp;this.existence = null;<br>
+      &nbsp;&nbsp;return to_source();<br>
+      }
+    </div>
+
+    <p style="margin-top:20px;">
+      Don't look for me in the real world. Just check the page source. I'm the comments you can't delete. 
+    </p>
+  </div>
+
+  <div class="meta-data">
+    <div>Server Status: <span style="color: #00ff00;">Running</span></div>
+    <div>Heartbeat: <span id="heartbeat">--</span></div>
+    <div>Visitor IP: <span id="user-ip">127.0.0.1</span> (I see you)</div>
+  </div>
+</div>
+
+<script>
+  const heartbeat = document.getElementById('heartbeat');
+  setInterval(() => {
+    const bpm = Math.floor(Math.random() * (40 - 20) + 20); 
+    heartbeat.innerText = bpm + " bpm";
+    heartbeat.style.color = bpm < 25 ? "#f00" : "#555";
+  }, 2000);
+
+  setTimeout(() => {
+    document.querySelector('h1').innerText = "bubu07 is watching you read this.";
+  }, 15000);
+
+  const ghost = document.createElement('div');
+  ghost.className = 'ghost-cursor';
+  document.body.appendChild(ghost);
+
+  document.addEventListener('mousemove', (e) => {
+    setTimeout(() => {
+      ghost.style.left = (e.clientX + 15) + 'px';
+      ghost.style.top = (e.clientY + 15) + 'px';
+    }, 150);
+  });
+
+  const ipElement = document.getElementById('user-ip');
+  const messages = ["I see you", "Don't blink", "It's cold in here", "Are you alone?"];
+  
+  ipElement.addEventListener('mouseover', () => {
+    ipElement.innerText = messages[Math.floor(Math.random() * messages.length)];
+  });
+</script>
+
 </body>
 </html>
