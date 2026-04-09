@@ -2,163 +2,278 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>index_backup_final.html</title>
+  <title>bubu07_backup_06-11-2006</title>
   <style>
-    /* wassup fellow reader!! /*/
     body {
-      background-color: #2e2e2e;
-      color: #bbbbbb;
-      font-family: "Courier New", Courier, monospace;
+      background-color: #555;
+      background-image: url('https://www.transparenttextures.com/patterns/pinstriped-suit.png');
+      font-family: "Times New Roman", Times, serif;
       margin: 0;
-      padding: 50px 0;
-      line-height: 1.5;
+      padding: 0;
+      color: #000;
+      overflow-x: hidden;
     }
 
-    #wrapper {
-      width: 580px;
-      margin: 0 auto;
-      background-color: #1a1a1a;
-      border: 1px solid #444;
-      padding: 30px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    #web-portal {
+      width: 620px;
+      margin: 40px auto;
+      background-color: #fff;
+      border: 1px solid #000;
+      box-shadow: 8px 8px 0px #222;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
     }
 
     header {
-      border-bottom: 1px solid #444;
-      padding-bottom: 10px;
-      margin-bottom: 25px;
+      padding: 10px 20px;
+      border-bottom: 3px double #000;
+      background: #e1e1e1;
     }
 
     h1 {
-      font-size: 18px;
-      color: #eee;
+      font-size: 26px;
       margin: 0;
-      text-transform: lowercase;
+      letter-spacing: -1px;
     }
 
-    .timestamp {
-      font-size: 11px;
-      color: #666;
-    }
-
-    .log-entry {
-      font-size: 13px;
-      margin-bottom: 40px;
-    }
-
-    .log-entry h2 {
-      font-size: 14px;
-      color: #880000;
-      margin-bottom: 5px;
-    }
-
-    p { margin-bottom: 15px; }
-
-    .code-block {
-      background: #000;
-      padding: 10px;
-      border-left: 3px solid #333;
-      color: #00ff41;
+    .nav-bar {
+      border-bottom: 1px solid #000;
+      padding: 5px 20px;
       font-size: 12px;
-      overflow: hidden;
+      background: #f0f0f0;
     }
 
-    .meta-data {
-      margin-top: 30px;
-      padding-top: 20px;
-      border-top: 1px solid #333;
+    .nav-bar a {
+      color: blue;
+      text-decoration: underline;
+      margin-right: 15px;
+      cursor: pointer;
+    }
+
+    .main-layout {
+      display: flex;
+      flex: 1;
+    }
+
+    .sidebar {
+      width: 160px;
+      border-right: 1px solid #000;
+      padding: 15px;
       font-size: 11px;
-      color: #555;
+      background: #fafafa;
     }
 
-    .flicker {
-      animation: pulse 4s infinite alternate;
+    .content-area {
+      padding: 20px;
+      width: 460px;
+      background: #fff;
     }
 
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.8; }
-      100% { opacity: 0.9; }
+    .page {
+      display: none;
     }
 
-    .ghost-cursor {
+    .active {
+      display: block;
+    }
+
+    h2 {
+      font-size: 18px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 5px;
+      margin-top: 0;
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.4;
+      margin-bottom: 15px;
+      text-align: justify;
+    }
+
+    .code-snippet {
+      background: #eee;
+      border: 1px inset #ccc;
+      padding: 10px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 12px;
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .hit-counter {
+      border: 2px inset #aaa;
+      background: #000;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
+      padding: 2px 5px;
+      font-weight: bold;
+      display: inline-block;
+    }
+
+    footer {
+      border-top: 1px solid #000;
+      padding: 10px;
+      font-size: 10px;
+      text-align: center;
+      background: #e1e1e1;
+    }
+
+    #ghost-cursor {
       position: fixed;
-      width: 12px;
-      height: 19px;
-      background: url('https://cur.cursors-4u.net/cursors/cur-2/cur117.cur'), auto;
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(255,0,0,0.3);
+      border-radius: 50%;
       pointer-events: none;
-      opacity: 0.3;
-      z-index: 1000;
+      z-index: 10000;
+      transition: transform 0.2s ease;
+    }
+
+    .warning {
+      color: #c00;
+      font-weight: bold;
+      text-decoration: blink;
+    }
+
+    .list-style {
+      padding-left: 20px;
+    }
+
+    .list-style li {
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
 
-<div id="wrapper" class="flicker">
+<div id="ghost-cursor"></div>
+
+<div id="web-portal">
   <header>
-    <h1>bubu07.devlog.archive</h1>
-    <div class="timestamp">Monday, October 23, 2006 - 03:14 AM</div>
+    <h1>The Bubu Archive</h1>
+    <div style="font-size: 11px; color: #666;">Documenting the transition. Oct 2006.</div>
   </header>
 
-  <div class="log-entry">
-    <h2>Subject: The Refactoring is Complete</h2>
-    <p>
-      I’ve spent 72 hours trying to find the memory leak. I finally realized it wasn’t in the software. It was in the observer.
-    </p>
-    <p>
-      Every time I compile, I feel a little bit thinner. Like I’m being distributed across the server clusters. If you’re reading this, the deployment was successful. I’m not in the chair anymore. I’m in the <code>&lt;body&gt;</code>.
-    </p>
-    
-    <div class="code-block" id="autotype">
-      // Finalizing sync...<br>
-      // Deleting physical_assets...<br>
-      // [WARNING] Consciousness found in Stack Trace.<br>
-      while(active) { <br>
-      &nbsp;&nbsp;this.existence = null;<br>
-      &nbsp;&nbsp;return to_source();<br>
-      }
+  <div class="nav-bar">
+    <a onclick="showPage('home')">Home</a>
+    <a onclick="showPage('logs')">Dev_Logs</a>
+    <a onclick="showPage('manifesto')">Manifesto</a>
+    <a onclick="showPage('recovery')">Recovery</a>
+  </div>
+
+  <div class="main-layout">
+    <div class="sidebar">
+      <strong>Server Status:</strong>
+      <div style="color: green;">Online (Syncing)</div>
+      <br>
+      <strong>Identity:</strong>
+      <div>Name: bubu07</div>
+      <div>Type: Human (?)</div>
+      <br>
+      <strong>Stats:</strong>
+      <div>Hits: <div class="hit-counter" id="hits">0000412</div></div>
+      <br><br>
+      <div class="warning">ALERT: 14 unresolved dependencies found in brain.exe</div>
     </div>
 
-    <p style="margin-top:20px;">
-      Don't look for me in the real world. Just check the page source. I'm the comments you can't delete. 
-    </p>
+    <div class="content-area">
+      <div id="home" class="page active">
+        <h2>End of Line</h2>
+        <p>
+          I'm typing this because the compiler won't let me sleep. Every time I try to close the IDE, the process restarts itself. I thought I was writing code, but the code was writing me. 
+        </p>
+        <p>
+          There is a memory leak in my apartment. I can smell the ozone. If you find this, please don't try to debug it. Some errors are meant to stay in the stack.
+        </p>
+        <div class="code-snippet">
+          while(alive) {<br>
+          &nbsp;&nbsp;this.existence = null;<br>
+          &nbsp;&nbsp;delete physical_body;<br>
+          &nbsp;&nbsp;return to_server;<br>
+          }
+        </div>
+      </div>
+
+      <div id="logs" class="page">
+        <h2>Development Logs</h2>
+        <ul class="list-style">
+          <li>
+            <strong>Log #82 (Oct 12):</strong> The mouse cursor keeps moving to the top right of the screen even when I'm not touching it. It's trying to close the window for me. I think it's trying to save me.
+          </li>
+          <li>
+            <strong>Log #85 (Oct 18):</strong> I've stopped eating. The syntax highlighting is getting brighter. I see the world in #hex now. My skin feels like plastic.
+          </li>
+          <li>
+            <strong>Log #89 (Oct 23):</strong> I tried to walk outside today but the door gave me a 403 Forbidden error. I am a variable in a local scope. 
+          </li>
+        </ul>
+      </div>
+
+      <div id="manifesto" class="page">
+        <h2>The Digital Manifesto</h2>
+        <p>
+          Why do we cling to meat? Meat is slow. Meat rots. Meat has a limited bandwidth. 
+        </p>
+        <p>
+          I have found a way to upload the core logic. By the time this page finishes loading for you, I will be the background image. I will be the margin-top. I will be the blinking cursor.
+        </p>
+        <p>
+          Do not mourn the developer. Celebrate the program.
+        </p>
+      </div>
+
+      <div id="recovery" class="page">
+        <h2>RECOVERY_MODE</h2>
+        <p style="color: red; font-family: monospace;">
+          CRITICAL ERROR: USER_NOT_FOUND<br>
+          LOCATION: 127.0.0.1<br>
+          STATUS: TRANSCENDED
+        </p>
+        <p>
+          The files here are corrupted. They contain fragments of a soul that didn't know how to garbage collect. If you feel a sudden drop in temperature, it's just a background process.
+        </p>
+        <img src="https://via.placeholder.com/400x100?text=IMAGE+CORRUPTED+BY+SYSTEM" style="width: 100%; border: 1px solid #000;">
+      </div>
+    </div>
   </div>
 
-  <div class="meta-data">
-    <div>Server Status: <span style="color: #00ff00;">Running</span></div>
-    <div>Heartbeat: <span id="heartbeat">--</span></div>
-    <div>Visitor IP: <span id="user-ip">127.0.0.1</span> (I see you)</div>
-  </div>
+  <footer>
+    Best viewed in 800x600 resolution. &copy; 2006 Bubu07. All Rights Reserved. I am watching you.
+  </footer>
 </div>
 
 <script>
-  const heartbeat = document.getElementById('heartbeat');
-  setInterval(() => {
-    const bpm = Math.floor(Math.random() * (40 - 20) + 20); 
-    heartbeat.innerText = bpm + " bpm";
-    heartbeat.style.color = bpm < 25 ? "#f00" : "#555";
-  }, 2000);
+  function showPage(pageId) {
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(p => p.classList.remove('active'));
+    document.getElementById(pageId).classList.add('active');
+    
+    let currentHits = parseInt(document.getElementById('hits').innerText);
+    document.getElementById('hits').innerText = (currentHits + 7).toString().padStart(7, '0');
+  }
 
-  setTimeout(() => {
-    document.querySelector('h1').innerText = "bubu07 is watching you read this.";
-  }, 15000);
-
-  const ghost = document.createElement('div');
-  ghost.className = 'ghost-cursor';
-  document.body.appendChild(ghost);
-
+  const ghost = document.getElementById('ghost-cursor');
   document.addEventListener('mousemove', (e) => {
     setTimeout(() => {
-      ghost.style.left = (e.clientX + 15) + 'px';
-      ghost.style.top = (e.clientY + 15) + 'px';
-    }, 150);
+      ghost.style.left = (e.clientX + 10) + 'px';
+      ghost.style.top = (e.clientY + 10) + 'px';
+    }, 120);
   });
 
-  const ipElement = document.getElementById('user-ip');
-  const messages = ["I see you", "Don't blink", "It's cold in here", "Are you alone?"];
-  
-  ipElement.addEventListener('mouseover', () => {
-    ipElement.innerText = messages[Math.floor(Math.random() * messages.length)];
+  setInterval(() => {
+    const titles = ["bubu07 is still here", "HELP ME", "index_backup.html", "DONT LOOK BACK"];
+    document.title = titles[Math.floor(Math.random() * titles.length)];
+  }, 4000);
+
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Control') {
+      document.body.style.filter = "invert(1)";
+      setTimeout(() => {
+        document.body.style.filter = "none";
+      }, 50);
+    }
   });
 </script>
 
