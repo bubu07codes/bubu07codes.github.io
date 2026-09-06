@@ -1,281 +1,577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>bubu07_backup_06-11-2006</title>
-  <style>
-    body {
-      background-color: #555;
-      background-image: url('https://www.transparenttextures.com/patterns/pinstriped-suit.png');
-      font-family: "Times New Roman", Times, serif;
-      margin: 0;
-      padding: 0;
-      color: #000;
-      overflow-x: hidden;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubu Dev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+        :root {
+            --bg: #0b0d13;
+            --panel: rgba(18, 22, 31, 0.75);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(99, 102, 241, 0.4);
+            --text: #f3f4f6;
+            --subtext: #9ca3af;
+            --accent: #6366f1;
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --emerald: #10b981;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
 
-    #web-portal {
-      width: 620px;
-      margin: 40px auto;
-      background-color: #fff;
-      border: 1px solid #000;
-      box-shadow: 8px 8px 0px #222;
-      min-height: 90vh;
-      display: flex;
-      flex-direction: column;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+            user-select: none;
+        }
 
-    header {
-      padding: 10px 20px;
-      border-bottom: 3px double #000;
-      background: #e1e1e1;
-    }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-    h1 {
-      font-size: 26px;
-      margin: 0;
-      letter-spacing: -1px;
-    }
+        canvas#grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
 
-    .nav-bar {
-      border-bottom: 1px solid #000;
-      padding: 5px 20px;
-      font-size: 12px;
-      background: #f0f0f0;
-    }
+        .container {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 520px;
+        }
 
-    .nav-bar a {
-      color: blue;
-      text-decoration: underline;
-      margin-right: 15px;
-      cursor: pointer;
-    }
+        .card {
+            background: var(--panel);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08);
+            position: relative;
+        }
 
-    .main-layout {
-      display: flex;
-      flex: 1;
-    }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    .sidebar {
-      width: 160px;
-      border-right: 1px solid #000;
-      padding: 15px;
-      font-size: 11px;
-      background: #fafafa;
-    }
+        .identity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    .content-area {
-      padding: 20px;
-      width: 460px;
-      background: #fff;
-    }
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow: 0 4px 12px var(--accent-glow);
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--border);
+        }
 
-    .page {
-      display: none;
-    }
+        .avatar:active {
+            transform: scale(0.8) rotate(-12deg);
+        }
 
-    .active {
-      display: block;
-    }
+        .title-area h1 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
 
-    h2 {
-      font-size: 18px;
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 5px;
-      margin-top: 0;
-    }
+        .title-area span {
+            font-size: 0.75rem;
+            color: var(--subtext);
+            font-weight: 500;
+        }
 
-    p {
-      font-size: 14px;
-      line-height: 1.4;
-      margin-bottom: 15px;
-      text-align: justify;
-    }
+        .silly-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
 
-    .code-snippet {
-      background: #eee;
-      border: 1px inset #ccc;
-      padding: 10px;
-      font-family: "Courier New", Courier, monospace;
-      font-size: 12px;
-      margin: 10px 0;
-      color: #333;
-    }
+        .silly-btn:hover {
+            background: #f43f5e;
+            border-color: #f43f5e;
+            transform: rotate(3deg) scale(1.05);
+        }
 
-    .hit-counter {
-      border: 2px inset #aaa;
-      background: #000;
-      color: #0f0;
-      font-family: 'Courier New', monospace;
-      padding: 2px 5px;
-      font-weight: bold;
-      display: inline-block;
-    }
+        .role-switcher {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            padding: 4px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
 
-    footer {
-      border-top: 1px solid #000;
-      padding: 10px;
-      font-size: 10px;
-      text-align: center;
-      background: #e1e1e1;
-    }
+        .role-tab {
+            background: transparent;
+            border: none;
+            color: var(--subtext);
+            padding: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+        }
 
-    #ghost-cursor {
-      position: fixed;
-      width: 20px;
-      height: 20px;
-      border: 1px solid rgba(255,0,0,0.3);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 10000;
-      transition: transform 0.2s ease;
-    }
+        .role-tab.active {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 10px var(--accent-glow);
+        }
 
-    .warning {
-      color: #c00;
-      font-weight: bold;
-      text-decoration: blink;
-    }
+        .terminal-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            min-height: 85px;
+            margin-bottom: 20px;
+        }
 
-    .list-style {
-      padding-left: 20px;
-    }
+        .terminal-line {
+            color: var(--subtext);
+            line-height: 1.6;
+            display: none;
+        }
 
-    .list-style li {
-      margin-bottom: 10px;
-    }
-  </style>
+        .terminal-line.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .terminal-line .cmd {
+            color: var(--emerald);
+        }
+
+        .terminal-line .highlight {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--subtext);
+        }
+
+        .stack-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tech-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .tech-pill:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+            transform: translateY(-2px) scale(1.05);
+        }
+
+        .drawer-btn {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 20px;
+        }
+
+        .drawer-btn:hover {
+            border-color: var(--border-hover);
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .snake-wrapper {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 14px;
+            border: 0px solid var(--border);
+        }
+
+        .snake-wrapper.open {
+            max-height: 220px;
+            border-width: 1px;
+            padding: 12px;
+            margin-bottom: 20px;
+        }
+
+        .snake-caption {
+            font-size: 0.75rem;
+            color: #f43f5e;
+            font-family: var(--font-mono);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .snake-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--subtext);
+            font-weight: 600;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--emerald);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--emerald);
+        }
+
+        .link-btn {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.06);
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: all 0.2s;
+        }
+
+        .link-btn:hover {
+            background: rgba(255,255,255,0.12);
+            border-color: rgba(255,255,255,0.25);
+            transform: rotate(-2deg);
+        }
+
+        .pop-emoji {
+            position: fixed;
+            pointer-events: none;
+            font-size: 2rem;
+            z-index: 99;
+            animation: floatUp 1s ease-out forwards;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(0.5) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-80px) scale(1.5) rotate(45deg); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
-<div id="ghost-cursor"></div>
+    <canvas id="grid"></canvas>
 
-<div id="web-portal">
-  <header>
-    <h1>The Bubu Archive</h1>
-    <div style="font-size: 11px; color: #666;">Documenting the transition. Oct 2006.</div>
-  </header>
+    <div class="container">
+        <div class="card" id="main-card">
+<div class="top-bar">
+                <div class="identity">
+                    <img class="avatar" src="https://avatars.githubusercontent.com/u/177572394?s=400&u=9ee5c0a502f709f9c0dd10851f24ec64bc463a98&v=4" alt="Bubu Avatar" onclick="boopAvatar(event)" title="Boop me!">
+                    <div class="title-area">
+                        <h1 id="bubu-title">Bubu</h1>
+                        <span>@bubu07codes</span>
+                    </div>
+                </div>
+                <button class="silly-btn" onclick="chaosMode()">dont click</button>
+            </div>
 
-  <div class="nav-bar">
-    <a onclick="showPage('home')">Home</a>
-    <a onclick="showPage('logs')">Dev_Logs</a>
-    <a onclick="showPage('manifesto')">Manifesto</a>
-    <a onclick="showPage('recovery')">Recovery</a>
-  </div>
+            <div class="role-switcher">
+                <button class="role-tab active" onclick="setRole('current', event)">Current Focus</button>
+                <button class="role-tab" onclick="setRole('origin', event)">Previously</button>
+            </div>
 
-  <div class="main-layout">
-    <div class="sidebar">
-      <strong>Server Status:</strong>
-      <div style="color: green;">Online (Syncing)</div>
-      <br>
-      <strong>Identity:</strong>
-      <div>Name: bubu07</div>
-      <div>Type: Human (?)</div>
-      <br>
-      <strong>Stats:</strong>
-      <div>Hits: <div class="hit-counter" id="hits">0000412</div></div>
-      <br><br>
-      <div class="warning">ALERT: 14 unresolved dependencies found in brain.exe</div>
-    </div>
+            <div class="terminal-box">
+                <div id="term-current" class="terminal-line active">
+                    <span class="cmd">Now:</span><br>
+                    Building <span class="highlight">Modern Desktop Apps</span> & lightweight system utilities. Transitioning engine architecture skills into production code.
+                </div>
+                <div id="term-origin" class="terminal-line">
+                    <span class="cmd">Previously:</span><br>
+                    Ex-indie developer. Built <span class="highlight">Low-Poly Horror</span>, retro vertex shaders, and mechanics in C# & Unity.
+                </div>
+            </div>
 
-    <div class="content-area">
-      <div id="home" class="page active">
-        <h2>End of Line</h2>
-        <p>
-          I'm typing this because the compiler won't let me sleep. Every time I try to close the IDE, the process restarts itself. I thought I was writing code, but the code was writing me. 
-        </p>
-        <p>
-          There is a memory leak in my apartment. I can smell the ozone. If you find this, please don't try to debug it. Some errors are meant to stay in the stack.
-        </p>
-        <div class="code-snippet">
-          while(alive) {<br>
-          &nbsp;&nbsp;this.existence = null;<br>
-          &nbsp;&nbsp;delete physical_body;<br>
-          &nbsp;&nbsp;return to_server;<br>
-          }
+            <div class="section-header">
+                <span class="section-title">What i work with</span>
+            </div>
+            <div class="stack-grid">
+                <div class="tech-pill" onclick="repelGrid(event)">C#</div>
+                <div class="tech-pill" onclick="repelGrid(event)">Electron</div>
+                <div class="tech-pill" onclick="repelGrid(event)">TypeScript</div>
+                <div class="tech-pill" onclick="repelGrid(event)">React</div>
+                <div class="tech-pill" onclick="repelGrid(event)">Node.js</div>
+                <div class="tech-pill" onclick="repelGrid(event)">Lua</div>
+                <div class="tech-pill" onclick="repelGrid(event)">Unity</div>
+                <div class="tech-pill" onclick="repelGrid(event)">Git</div>
+            </div>
+
+            <button class="drawer-btn" onclick="toggleDrawer()">
+                <span>Contribution Snake</span>
+                <span id="drawer-arrow">▼</span>
+            </button>
+            <div class="snake-wrapper" id="snake-drawer">
+                <div class="snake-caption">⚠️ Oh no, the snek is eating my contributions!!</div>
+                <picture>
+                    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/bubu07codes/bubu07codes/output/github-contribution-grid-snake-dark.svg">
+                    <img alt="GitHub Contribution Snake" src="https://raw.githubusercontent.com/bubu07codes/bubu07codes/output/github-contribution-grid-snake.svg">
+                </picture>
+            </div>
+
+            <div class="footer">
+                <div class="status">
+                    <div class="dot"></div>
+                    Available for projects
+                </div>
+                <a href="https://github.com/bubu07codes" target="_blank" class="link-btn">
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                    GitHub Profile
+                </a>
+            </div>
         </div>
-      </div>
-
-      <div id="logs" class="page">
-        <h2>Development Logs</h2>
-        <ul class="list-style">
-          <li>
-            <strong>Log #82 (Oct 12):</strong> The mouse cursor keeps moving to the top right of the screen even when I'm not touching it. It's trying to close the window for me. I think it's trying to save me.
-          </li>
-          <li>
-            <strong>Log #85 (Oct 18):</strong> I've stopped eating. The syntax highlighting is getting brighter. I see the world in #hex now. My skin feels like plastic.
-          </li>
-          <li>
-            <strong>Log #89 (Oct 23):</strong> I tried to walk outside today but the door gave me a 403 Forbidden error. I am a variable in a local scope. 
-          </li>
-        </ul>
-      </div>
-
-      <div id="manifesto" class="page">
-        <h2>The Digital Manifesto</h2>
-        <p>
-          Why do we cling to meat? Meat is slow. Meat rots. Meat has a limited bandwidth. 
-        </p>
-        <p>
-          I have found a way to upload the core logic. By the time this page finishes loading for you, I will be the background image. I will be the margin-top. I will be the blinking cursor.
-        </p>
-        <p>
-          Do not mourn the developer. Celebrate the program.
-        </p>
-      </div>
-
-      <div id="recovery" class="page">
-        <h2>RECOVERY_MODE</h2>
-        <p style="color: red; font-family: monospace;">
-          CRITICAL ERROR: USER_NOT_FOUND<br>
-          LOCATION: 127.0.0.1<br>
-          STATUS: TRANSCENDED
-        </p>
-        <p>
-          The files here are corrupted. They contain fragments of a soul that didn't know how to garbage collect. If you feel a sudden drop in temperature, it's just a background process.
-        </p>
-        <img src="https://via.placeholder.com/400x100?text=IMAGE+CORRUPTED+BY+SYSTEM" style="width: 100%; border: 1px solid #000;">
-      </div>
     </div>
-  </div>
 
-  <footer>
-    Best viewed in 800x600 resolution. &copy; 2006 Bubu07. All Rights Reserved. I am watching you.
-  </footer>
-</div>
+    <script>
+        const canvas = document.getElementById('grid');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let points = [];
+        let mouse = { x: -1000, y: -1000 };
+        const sillyEmojis = ['👾', '👻', '🍕', '🎮', '💀', '💻', '⚡', '🤖', '🚀'];
 
-<script>
-  function showPage(pageId) {
-    const pages = document.querySelectorAll('.page');
-    pages.forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-    
-    let currentHits = parseInt(document.getElementById('hits').innerText);
-    document.getElementById('hits').innerText = (currentHits + 7).toString().padStart(7, '0');
-  }
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initPoints();
+        }
 
-  const ghost = document.getElementById('ghost-cursor');
-  document.addEventListener('mousemove', (e) => {
-    setTimeout(() => {
-      ghost.style.left = (e.clientX + 10) + 'px';
-      ghost.style.top = (e.clientY + 10) + 'px';
-    }, 120);
-  });
+        function initPoints() {
+            points = [];
+            const spacing = 36;
+            for (let x = 0; x < width; x += spacing) {
+                for (let y = 0; y < height; y += spacing) {
+                    points.push({ x, y, origX: x, origY: y, vx: 0, vy: 0 });
+                }
+            }
+        }
 
-  setInterval(() => {
-    const titles = ["bubu07 is still here", "HELP ME", "index_backup.html", "DONT LOOK BACK"];
-    document.title = titles[Math.floor(Math.random() * titles.length)];
-  }, 4000);
+        window.addEventListener('resize', resize);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
 
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'Control') {
-      document.body.style.filter = "invert(1)";
-      setTimeout(() => {
-        document.body.style.filter = "none";
-      }, 50);
-    }
-  });
-</script>
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            for (let p of points) {
+                let dx = mouse.x - p.x;
+                let dy = mouse.y - p.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                let maxDist = 130;
 
+                if (dist < maxDist) {
+                    let force = (1 - dist / maxDist) * -15;
+                    p.vx += (dx / dist) * force;
+                    p.vy += (dy / dist) * force;
+                }
+
+                p.vx += (p.origX - p.x) * 0.05;
+                p.vy += (p.origY - p.y) * 0.05;
+
+                p.vx *= 0.82;
+                p.vy *= 0.82;
+
+                p.x += p.vx;
+                p.y += p.vy;
+
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.12)';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        resize();
+        animate();
+
+        function setRole(role, e) {
+            document.querySelectorAll('.role-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.terminal-line').forEach(line => line.classList.remove('active'));
+
+            if (role === 'current') {
+                e.target.classList.add('active');
+                document.getElementById('term-current').classList.add('active');
+            } else {
+                e.target.classList.add('active');
+                document.getElementById('term-origin').classList.add('active');
+            }
+            popEmoji(e.clientX, e.clientY, role === 'current' ? '💻' : '🕹️');
+        }
+
+        function toggleDrawer() {
+            const drawer = document.getElementById('snake-drawer');
+            const arrow = document.getElementById('drawer-arrow');
+            drawer.classList.toggle('open');
+            arrow.innerText = drawer.classList.contains('open') ? '▲' : '▼';
+            if (drawer.classList.contains('open')) {
+                popEmoji(window.innerWidth / 2, window.innerHeight / 2 + 100, '🐍');
+            }
+        }
+
+        function repelGrid(e) {
+            const rect = e.target.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            
+            for (let p of points) {
+                let dx = cx - p.x;
+                let dy = cy - p.y;
+                let dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 160) {
+                    p.vx = -(dx / dist) * 25;
+                    p.vy = -(dy / dist) * 25;
+                }
+            }
+            popEmoji(e.clientX, e.clientY, sillyEmojis[Math.floor(Math.random() * sillyEmojis.length)]);
+        }
+
+        function boopAvatar(e) {
+            const avatar = e.target;
+            const titles = ['Bubu', 'Bubuuu', 'Bubu07', 'bubu07codes'];
+            document.getElementById('bubu-title').innerText = titles[Math.floor(Math.random() * titles.length)];
+            
+            for (let p of points) {
+                p.vx = (Math.random() - 0.5) * 30;
+                p.vy = (Math.random() - 0.5) * 30;
+            }
+            popEmoji(e.clientX, e.clientY, '🎉');
+        }
+
+        function chaosMode() {
+            const card = document.getElementById('main-card');
+            const rot = (Math.random() - 0.5) * 10;
+            card.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            card.style.transform = `rotate(${rot}deg) scale(0.98)`;
+            
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    popEmoji(
+                        Math.random() * window.innerWidth, 
+                        Math.random() * window.innerHeight, 
+                        sillyEmojis[Math.floor(Math.random() * sillyEmojis.length)]
+                    );
+                }, i * 100);
+            }
+
+            for (let p of points) {
+                p.vx = (Math.random() - 0.5) * 50;
+                p.vy = (Math.random() - 0.5) * 50;
+            }
+
+            setTimeout(() => {
+                card.style.transform = 'none';
+            }, 600);
+        }
+
+        function popEmoji(x, y, char) {
+            const el = document.createElement('div');
+            el.className = 'pop-emoji';
+            el.innerText = char;
+            el.style.left = `${x - 15}px`;
+            el.style.top = `${y - 15}px`;
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 1000);
+        }
+    </script>
 </body>
 </html>
